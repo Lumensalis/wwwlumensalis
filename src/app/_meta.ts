@@ -1,4 +1,4 @@
-import { GitHubIcon } from 'nextra/icons'
+// import { GitHubIcon } from 'nextra/icons'
 import type { MetaRecord } from 'nextra'
 
 

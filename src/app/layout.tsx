@@ -51,7 +51,8 @@ export default async function RootLayout({ children }: Readonly<{
           banner={banner}
           navbar={navbar}
           pageMap={await getPageMap()}
-          //docsRepositoryBase="https://github.com/shuding/nextra/tree/main/docs"
+          docsRepositoryBase="https://gitlab.com/lumensalis/wwwlumensalis"
+          //editLink={null}
           footer={footer}
           // ... Your additional layout options
         >
