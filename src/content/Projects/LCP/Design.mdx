@@ -1,0 +1,80 @@
+---
+title: LCP Design
+---
+
+## Goals 
+ ___Create a focused microcosm of accessible expression which allow 
+"mere mortals" to intuitively specify desired behaviors for an interactive
+system without needing a degree in software engineering___ 
+
+ That's an admittedly unwieldy description, but there are reasons why
+this is hard to define - and hard to accomplish.
+
+  - Intuitive : needs to "make sense" to non-developers
+    - present an environment in which they can specify desired behaviors
+    - Always start from the perspective of a non-programmer.
+      - DON'T start by thinking about code/logic for the _implementation_ of behaviors
+      - DO think about how one might intuitively describe the desired behaviors
+    - Clarity of the "behavior specifications" is _extremely_ important
+      - far more than performance
+  - Interactive
+    - Cause/effect, action/reaction, ...
+    - non blocking, no traditional sequential/linear coding
+  - Temporal awareness
+    - many interesting and desirable behaviors boil down to a change over time.
+      - this can be very challenging to implement reliably and scalably unless 
+         support is built in at a fundamental level
+  - Topical
+    - key domain-specific concepts must have 
+  - Distinct conceptual separation between specifying hardware configurations and desired behaviors
+
+
+## What this IS and is NOT
+
+I'll eventually add a section on the various requirements, tradeoffs, and methodologies 
+which have influenced my ideas on how to make this work over the years.  But
+for the programmer geeks out there, let me clarify that this is NOT a 
+[state machine](https://en.wikipedia.org/wiki/Finite-state_machine),
+[DSL (Domain Specific Language)](https://en.wikipedia.org/wiki/Domain-specific_language),
+[event-driven](https://en.wikipedia.org/wiki/Event-driven_programming)/[async](https://en.wikipedia.org/wiki/Asynchronous_method_invocation)/[futures](https://en.wikipedia.org/wiki/Futures_and_promises) framework,
+[pattern language](https://en.wikipedia.org/wiki/Pattern_language),
+or a set of [design patterns](https://en.wikipedia.org/wiki/Design_pattern), 
+although it may (and in practice does) incorporate many of these internally.
+
+
+## An Example Use Case
+Just for fun, here's a use case which helps illustrate some of the challenges.  
+Say you want to motorize a door in a piece of terrain.
+
+  - Givens 
+    - There is a door which you want to be able to open and close
+    - There is a motor attached to a mechanical mechanism, which is causes the door to move as the motor rotates
+  - Necessary behaviors
+    - open the door
+    - close the door
+    - move door to a partially open position
+    - vary the speed at which the door moves
+    - interrupt (pause or stop and cancel) or change speed of any current movement
+    - specify other behaviors triggered by door movement 
+  - Complications
+    - there are several types of motors (DC, servo, stepper, ...) 
+    - there is rarely a simple, foolproof way of knowing the door's position (between closed and open)
+      - absolute encoder is ideal, but also rare (and often overkill)
+      - servo motors have a degree of "absolute" target
+      - limit switches can detect the door at a specific position (open/closed/...)
+        - continuing to drive the motor past physical limits (i.e. the door frame 
+            prevent's further movement in the "close" direction past the "closed" position ) 
+            can potentially cause damage to mechanical parts and electronics
+        - some doors will only have one limit switch (typically open OR closed), some will have none
+    - all logic/implementation code MUST be non-blocking
+    - minimize risk of "letting the smoke out"
+      - failsafe time limits to keep the motor from running indefinitely are highly desirable
+        - even _with_ limit switches and an absolute encoder,  parts can fail, wires can break, ...
+
+
+First, consider just how complicated it gets to support _all_ of the 
+"necessary behaviors" even with fancy modern async frameworks.  Now, what
+kind of grammar could you construct that allows a non-programmer to clearly
+and comprehensively articulate that desired behavior?
+
+

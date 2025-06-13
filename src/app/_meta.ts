@@ -1,6 +1,8 @@
 import { GitHubIcon } from 'nextra/icons'
- 
-export default {
+import type { MetaRecord } from 'nextra'
+
+
+const meta: MetaRecord = {
   index: 'Home',
   // You can use JSX elements to change the look of titles in the sidebar, e.g. insert icons
   /*Contact: (
@@ -24,9 +26,12 @@ export default {
     type: "page"
     // ... and provide extra configurations
   }
-}
- 
+} ;
+
+export default meta;
+/*
 // Custom component for italicized text
-function Italic({ children, ...props }) {
+function Italic({ children:any, ...props }) {
   return <i {...props}>{children}</i>
 }
+  */
