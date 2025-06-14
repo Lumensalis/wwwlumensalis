@@ -1,8 +1,11 @@
 import type { MetaRecord } from 'nextra';
 
 const meta : MetaRecord = {
-    'LCP' : {}
-    
+    'LCPPF' : {
+            'title':"C++ Firmware"
+    },
+    'History' : {
+    }
 };
 
 export default meta;

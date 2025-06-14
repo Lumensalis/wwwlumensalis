@@ -5,9 +5,9 @@ export default function YouTube ({ id } : { id : string }){
     <div>
       <iframe
         className="aspect-video w-full"
-        src={"https://www.youtube.com/embed/" + id}
+        src={"https://www.youtube.com/embed/" + id + "?autoplay=1&loop=1"}
         title="YouTube Video Player"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; loop"
       ></iframe>
     </div>
   );

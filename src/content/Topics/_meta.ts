@@ -7,6 +7,9 @@ const meta : MetaRecord = {
     },
     'SoftwareDevelopment': {
         title: "Software Development"
+    },
+    'Hidden': {
+        display:"hidden"
     }
 };
 

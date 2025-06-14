@@ -1,0 +1,50 @@
+---
+title:  Major Site Updates
+---
+
+History of major site updates
+
+## Spring 2025
+
+Improving documentation content (partly as an experiment related to finding 
+[better ways to manage software documentation](Topics/SoftwareDevelopment/WritingDocumentation)).
+  
+  - Convert and consolidate various bits and pieces (static HTML, WordPress, Wiki,
+      Markdown, ...) to [MDX](https://mdxjs.com/)
+  - Rewrite site home page / structure using
+    - [Next.js](https://nextjs.org/) - rather major overkill for now, but...
+       - I've already used it in other projects, so I know I _could_ incorporate 
+         some pretty slick features in the future with WebSockets,
+         [React-Redux](https://react-redux.js.org/), [Three.js](), ...
+       - If Lumensalis explodes in popularity (not likely, the current simple
+         hosting model would probably suffice even with wide adoption within
+         the current community of people building effects, but we can hope) 
+         it's mostly ready to deploy on a more scalable modern [CDN](https://en.wikipedia.org/wiki/Content_delivery_network)
+    - [Nextra](https://nextra.site/)
+      - Lightweight framework/template integrating MDX support for Next.js
+      - looks like best balance between ease of startup and features compared to other options like
+        - [AriaDocs](https://vercel.com/templates/documentation/documentation-template)
+        - Direct MDX integration into an existing Next.js projects
+           - plenty of [guides](https://nextjs.org/docs/pages/guides/mdx) [on](https://dev.to/nitinfab/getting-started-with-mdx-in-nextjs-a-practical-guide-30hf)
+             [how](https://www.dhiwise.com/post/comprehensive-guide-to-using-next-mdx-remote-in-nextjs) [to](https://www.telerik.com/blogs/advanced-content-creation-mdx-next-js-14)
+            [do](https://www.geeksforgeeks.org/reactjs/mdx-in-next-js/) [this](https://spacejelly.dev/posts/mdx-in-nextjs) 
+           - but leaves you dealing with the outer navbar / TOC / banner / footer layout, search indexing, ...
+        - not a huge lock-in risk since most of the work is in the MDX
+          content, which should work without modification even if the mechanism
+          for integrating MDX changes
+    - [TypeScript](https://www.typescriptlang.org/)
+      - I really, really like TypeScript.  I've used javascript off and on 
+        over the years, especially for interactive 
+        realtime(ish) client/browser trading system UIs.  However, I found it rather
+        frustrating to write reliable async code with complex data content 
+        because of how syntactically subtle bugs could be, especially with
+        the lack of feedback (silent errors).  When I started using Next.js, 
+        it lead me to try TypeScript and it dramatically changed my willingness
+        to work with Javascript-based components.
+
+
+## 2020
+
+Initial site creation as simple static site as a basic HTML overview with 
+the majority of more complex content in Wiki, WordPress, and links to 
+GitHub/GitLab markdown pages.

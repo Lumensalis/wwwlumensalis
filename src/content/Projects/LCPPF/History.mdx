@@ -1,0 +1,64 @@
+---
+title: History
+---
+
+This is a long-term project which I hope to release someday.  
+
+## History
+
+I've been doing embedded software in C and C++ for a rather long time, 
+initially as a professional developer for systems that required some rather
+expensive hardware.  Over time, as embedded controllers powerful enough 
+to support moderately complex C++ firmware became more affordable, I 
+began tinkering with personal projects.  
+
+### A few examples of personal projects :
+
+#### CNC system 
+  -custom LPC2119 firmware for a 2.5 axis (high precision X-Y, coarse Z) 
+    for a scratch-built CNC machine to automate drilling holes in custom PCB boards
+  - firmware, system software, and circuit/PCB design for a 128 channel fireworks ignition system
+    - Raspberry Pi primary controller
+    - up to four 32 channel igniter boards
+      - Arduino Nano with SPI connection to primary
+      - dual MCP23017 I2C I/O expanders
+    - custom PCB and circuit design (KiCad)
+
+#### RC Car turn signal/brake lights controller
+  - tapped into speed and steering servo PWM signals to automatically
+      activate brake lights when reducing speed or turn signals when steering off center
+
+#### "Wizard's Staff" for son's halloween costume
+    - Arduino Nano
+    - I2C 6DOF sensor
+    - lots of WS2812B leds crammed into a 2.5" wide translucent icosahedron (D20...)
+
+### Christmas Tree lighting
+  - ESP8266/ESP32 based controller for WS2812B LED chains on our Christmas tree
+    - started innocently enough
+    - has grown into a monster, with no signs of stopping
+      - over 1000 LEDs
+
+      - web UI over WiFi
+      - physical (button/encode) and integrated TFT touchscreen interface
+
+
+## Changing focus
+
+I became a bit obsessed after discovering addressable RGB LEDs (NeoPixel/WS2811/WS2812B/...).  
+Not long after that (around 2018), the release of Sparkfun's [Qwiic](https://learn.sparkfun.com/tutorials/i2c/qwiic-connect-system) 
+and Adafruit's [StemmaQT](https://learn.adafruit.com/introducing-adafruit-stemma-qt/what-is-stemma) 
+established a (fortunately interchangeable and cross-compatible) hobbyist friendly system for 
+easily connecting 3.3V I2C devices to Qwiic/StemmaQT enabled controllers.
+
+ Around the same time, my son and I became interested in tabletop gaming 
+ (mostly Warhammer 40K) and I started 3D printing terrain.  Then I started thinking about adding some LED and sound effects to 
+3D printed terrain and gaming models (mostly W40K Ork vehicles).  
+
+At this point, several things came together into an "aha" moment, and my 
+C++ effects firmware project started taking on it's own identity.  Not just as a system,
+for _me_ to do things - I can already do just about anything I want for my
+ own projects - but as a tool to make embedding complex interactive effects 
+ accessible for "regular" people without programming experience.
+
+ It still has a way to go, but it's getting there.

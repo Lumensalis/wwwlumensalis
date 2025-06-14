@@ -1,0 +1,129 @@
+---
+title: Lumensalis C++ Firmware
+---
+
+> [!WARNING]
+>
+> This has _NOT_ been publicly released yet.  It _is_ still being actively developed, 
+> but needs more work (especially examples and documentation) before
+> general distribution.  However, if you have at least 
+> intermediate technical experience (particularly with JSON and a bit of programming)
+> and are interested in playing with an alpha-level release, let me know.
+
+
+# Overview
+
+The "C++ Firmware" (consider the name a placeholder - I'll come up with
+ something better but that's not a high priority until it's a bit closer
+ to a V1.0 release) is an ESP32 based system intended primarily for controlling
+ interactive light, audio, and motion effects. 
+
+This kind of system isn't ever really "finished", although they can be abandoned.
+But while it's still in "stealth mode", it is already quite capable and feature 
+rich - currently several hundred thousand lines of C++ code.
+
+## Current Features
+
+
+### No coding required
+
+_Technically_ this could be considered a bit of a stretch.  A
+ large part of the system functionality is driven by JSON configuration files,
+ and those can get a bit complicated.  There is also a built in 
+ [DSL (Domain Specific Language)](https://en.wikipedia.org/wiki/Domain-specific_language)  for 
+ extra complex custom behaviors, and you have to write "code" to use it.
+ However, this "code" is far simpler than just about anything you'd find 
+ in Arduino C++ capable of achieving similar behavior.
+
+Also, there is no firmware to rebuild or upload with some tricky bootloader
+ bypass process every time you want to change your project 
+behavior.  You just upload your new configuration files and go.
+
+### Wifi access  REST/Websockets/Browser interface
+
+The firmware provides 
+  - A REST api for interactively controlling and updating the system
+  - A WebSockets pub-sub system 
+    - for realtime-ish (no polling required) monitoring of a wide (and extensible in the configuration) variety of
+    things that change over time, including 
+      - system metrics (performance, memory usage, etc)
+      - changing input and output values
+      - project specific virtual outputs specifically for browser interface 
+    - for interactive browser-based control widgets 
+  - async HTTP server for static content
+
+There is also a Next.js/React based Web GUI which
+  - connects to a controller running the firmware over REST and Websockets 
+  - provides interactive access to the controller
+  - 3D visualization of the controller's "node graph"
+  - can be deployed directly on the controller
+    - uses a Next.js static export 
+    - all the UI "work" happens in the browser
+    - typically requires a controller with a LOT of extra
+      flash a with a microSD interface, as the full static content is over 3MB.
+
+### Neopixel / WS2812B control
+  
+  - easily control multiple (up to 8) channels.  Already have a system 
+   running 1050 LEDs (7 channels with 150 LEDs each).
+  - positional mapping 
+    - every LED can be configured with a physical location o
+        - partially complete OpenCV based system for automatically generating map data 
+    - effects can be based on
+    - LED address (which is what most traditional "effects" are, like blink/fade/color chase - easy )
+    - virtual canvas
+        - essentially turns tree into low resolution screen
+        - allows effects to use more advanced techniques like sweeps, rotations,
+        and radial/linear fades which are effectively impossible without 
+        positional mapping
+        
+### Supported I/O hardware options
+
+#### Terrain Tronics 
+  - Harlech Castle
+    - with effective software based dimming support
+  - Caernarfon Castle
+
+#### I2C 
+  - AW9523
+  - MPR121
+  - WiiChuck
+  - TCA9534
+  - TLV493D
+  - VCNL4040
+
+#### Audio
+  - I2S audio support
+  - virtual multi-channel mixing
+  - SPIFFS support for direct use of audio files stored in controller flash
+  file system or on a microSD card
+
+#### Display
+  - Simple I2C SSD1306 displays
+  - [LVGL](https://lvgl.io/) User Interfaces
+    - ILI934 TFT
+    - FT6336 Capacitive Touch 
+    - encoder and button/key support
+
+## Planned Features
+
+### Python
+- After working with CircuitPython, I'm tempted to embed a Python interpreter
+ as an alternative to the DSL.
+
+ ### Private Mesh Network
+
+This is actually already written and was the original networking mode for the
+firmware.  
+  - base on [painlessMesh](https://gitlab.com/painlessMesh/painlessMesh)
+  - it is _NOT_ IP networking
+    - you can use painlessMesh, OR regular IP, but not both at the same time
+    - Python system using painlessMesh with a python wrapper on a Raspberry Pi with a
+     secondary USB Wifi adapter acts as an overall coordinator for for the
+     mesh and a bridge allowing external WiFi access (through the
+     primary Raspberry Pi WiFi connection)
+  - switched firmware to direct IP/REST/WebSockets as it's much easier to get 
+    the initial setup working on a single controller
+  - but will probably re-enable mesh option at some point, as it offers some 
+    significant advantages for systems containing multiple controllers with
+    some higher level interaction

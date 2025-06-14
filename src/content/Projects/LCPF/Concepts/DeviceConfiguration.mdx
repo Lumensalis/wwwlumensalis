@@ -1,0 +1,62 @@
+---
+title: Device Configuration
+---
+
+In order to use all the nifty hardware that provides Inputs and/or Outputs, 
+LCPF needs to know what hardware you are using.  This is usually a fairly
+complex part of an embedded project.  LCPF makes this much easier _if_ you 
+stick within the "curated" set of hardware options.  For example, if you
+use a [Lolin S2 Mini](https://www.wemos.cc/en/latest/s2/s2_mini.html) with a 
+[Terrain-Tronics Caernarfon Castle Kit](https://www.tindie.com/products/terraintronics/caernarfon-castle-kit/), 
+configuration is as simple as 
+```python 
+caernarfon = mainManager.TerrainTronics.addCaernarfon()
+```
+There's no need what kind of controller you're 
+running on [^4] - LCPF figures that out for you.  And since it knows where the 
+various parts of the Caernarfon Castle board are connected, there's no need
+to specify pin assignments.  So if you are using the IR remote,  35 NeoPixel 
+LEDS, and two servo motors,  your entire code for device configuration could be
+```python 
+    caernarfon = mainManager.TerrainTronics.addCaernarfon(neoPixelCount=35)
+    doorMotor = caernarfon.initServo( 1, "doorDrive" )
+    windowMotor = caernarfon.initServo( 2, "windowMotor" )
+    remote = caernarfon.addIrRemote()
+
+```
+
+## Supported Controllers
+  | Board | Chip | Ram | Flash | Features |
+  | --- | --- | --- | --- | --- |
+  | [Lolin S2 Mini](https://www.wemos.cc/en/latest/s2/s2_mini.html) | ESP32-S2 | 2MB | 4MB | D1MPC[^1] |
+  | [Lolin S3 Mini](https://www.wemos.cc/en/latest/s3/s3_mini.html) | ESP32-S3 | 2MB | 4MB | D1MPC[^1] |
+  | [Lilygo T-OI+](https://lilygo.cc/products/t-oi-plus) | ESP32-C3 | 400K | 4MB | D1MPC[^1], battery |
+
+## Supported Terrain-Tronics D1 shields
+(these require a D1MPC [^1] controller )
+- [Cilgerran Castle](https://www.tindie.com/products/terraintronics/cilgerran-castle-6x-high-power-led-and-dc-motor/)  6x High Power LED and DC Motor driver
+- [Harlech Castle](https://www.tindie.com/products/terraintronics/harlech-castle-smart-8xled-controller/) Smart 8xLED Controller
+- [Caernarfon Castle](https://www.tindie.com/products/terraintronics/caernarfon-castle-pcb-circuit-board-only/) NeoPixel, IR, Qwiic/StemmaQT, triple servo
+
+## Supported upcoming Terrain-Tronics products
+- Caerphilly Castle Carrier board with NeoPixel, IR, Qwiic/StemmaQT
+- Harlech Castle XL - I2C (Qwiic/StemmaQT) 24 LED controller
+
+## Supported StemmaQT / Qwiic boards
+
+### Adafruit
+  - AW9523
+  - TLV493D
+  - MPR121
+  - Wii Nunchuk
+  - PCA9685
+  - QtRotaryEncoder
+  - VL53L0X
+
+## Generic I2C
+  - SSD1306 OLED display
+  
+
+
+
+[^1]: D1MPC = D1 Mini Pin Compatible, accepts Wemos Mini shields (like Terrain-Tronics Castle boards)

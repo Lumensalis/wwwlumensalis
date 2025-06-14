@@ -1,5 +1,5 @@
 ---
-title: LCP Design
+title: LCPF Design
 ---
 
 ## Goals 
@@ -10,7 +10,7 @@ system without needing a degree in software engineering___
  That's an admittedly unwieldy description, but there are reasons why
 this is hard to define - and hard to accomplish.
 
-  - Intuitive : needs to "make sense" to non-developers
+  - Intuitive ***to non-developers***
     - present an environment in which they can specify desired behaviors
     - Always start from the perspective of a non-programmer.
       - DON'T start by thinking about code/logic for the _implementation_ of behaviors
@@ -25,7 +25,8 @@ this is hard to define - and hard to accomplish.
       - this can be very challenging to implement reliably and scalably unless 
          support is built in at a fundamental level
   - Topical
-    - key domain-specific concepts must have 
+    - key domain-specific concepts must have rich representations
+  -  
   - Distinct conceptual separation between specifying hardware configurations and desired behaviors
 
 
@@ -78,3 +79,10 @@ kind of grammar could you construct that allows a non-programmer to clearly
 and comprehensively articulate that desired behavior?
 
 
+## Why CircuitPython - a developer's perspective
+
+While I've been working with Python and developing embedded systems in C++ 
+for a long time, I didn't get around to trying Python for embedded systems 
+until March of 2025.  That's when I started experimenting with CircuitPython, 
+and began building a framework for defining effects behaviors using concepts 
+similar to those in my C++ firmware projects.  

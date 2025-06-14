@@ -1,0 +1,47 @@
+---
+title: History
+---
+
+## Project History
+
+This project began shortly after I started working with CircuitPython in March 2025.   
+I wanted to integrate support for various 
+[TerrainTronics](https://terraintronics) Castle "shields" attached to an 
+ESP32 [S2 Mini](https://www.wemos.cc/en/latest/s2/s2_mini.html),  which I 
+already supported in my (still unreleased) C++ effects firmware.  
+
+Getting the TerrainTronics hardware working under CircuitPython - at level 
+to a level similar to most CircuitPython support - was fairly straightforward.
+However it quickly became apparent that while - as expected - Python made
+_some_ things much easier than C++, there were still challenges.  Nothing a
+developer with serious async & real-time(ish) experience can't handle, but 
+that still leaves a daunting task even for many "professional" developers, 
+and effectively disqualifies non-programmers altogether.
+
+Perhaps the biggest hurdle is that most interesting effects have significant 
+temporal aspects - things change over time.  Conceptually, this is something 
+most people can understand quite intuitively, but to break it down into code
+in a programming language can be surprisingly challenging. [^1]
+ Programming reactive systems which support complex 
+temporal behaviors isn't a common task, and it isn't easy.  
+
+There are techniques such as event-driven and async/promise/future frameworks, 
+but those aren't exactly beginner friendly. The LCPF seeks to use an alternate 
+approach which - hopefully - will avoid these issues and let just about anyone
+use complex effects.
+
+
+
+---
+
+[^1]: For example : Just about  anyone can pick up a pencil and draw a
+ curve freehand.   Fewer remember enough trigonometry to describe the curve 
+ mathematically. Fewer still can translate the math into code which renders 
+ a curve - especially if you want variable stroke width, anti-aliasing,
+ alpha/transparency support, color gradients...   Even so, all this can
+ still be broken down into a fairly traditional set of sequential 
+ instructions which can be easily expressed in any modern programming 
+ language.  Adding a temporal requirement, such as animating the rendering of
+  the curve or making it's vis, can make it significantly more challenging.
+
+
