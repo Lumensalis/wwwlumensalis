@@ -31,7 +31,7 @@ output:'export',
   //distDir:'dist',
   compress: true,
 
-    
+    trailingSlash: true,
    images: { 
         unoptimized: true  // required for static export
     } 
