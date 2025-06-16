@@ -6,9 +6,9 @@ title: Software Engineering Manifesto
 
 The following contains concepts and principles which I believe to be
 fundamental requirements for designing and implementing "good" 
-complex systems.   It is by no means an exhaustive list.  It still have 
-a bit of [editing](#short-is-sweet) left to do.  But it offers some insight 
-into my perspective on what matters for developing software.
+complex systems.   It is by no means an exhaustive list.  I still have 
+a good bit of [editing](#short-is-sweet) left to do.  But it offers some insight 
+into my perspective on what matters in software development.
 
 ### Exceptions to every rule
 
@@ -166,12 +166,32 @@ After which _judicious_ refactoring can result in quantifiable improvements in c
 and performance _and_ a reduction in size and complexity (especially in interfaces).
 
 
-
 ### Documentation matters
+
   This is important enough to have it's [own page](WritingDocumentation)
   
 ### Testing matters
+
     Also worthy of it's [own page](Testing)
+
+### Interface trumps Implementation
+
+Yet another worthy of it's own page, which will be coming soon.  
+A few highlights:
+
+
+
+A quick & dirty subsystem implementation behind a well designed interface can dramatically improve development velocity 
+without adding excessive risk.
+
+A _perfect_ implementation with a poorly designed interface is a recipe for disaster.
+
+or...
+```math
+cost:[ interfaceQuality, implementationQuality ]\to TechnicalDebt
+\atop
+cost( "badInterface","goodImplementation ") = 10 * cost( "goodInterface","badImplementation ")
+```
 
 ### Write Readable Code [#readablecode]
 
@@ -188,7 +208,7 @@ success of a project than more commonly sought "priorities" such as
 performance optimization (especially outside the fast path - you
 _did_ [identify your fast path](#cantimprove) first, right?). 
 
-There are many ways to improve the readability of your code, some of which is
+There are many ways to improve the readability of your code, some of which are
 language specific. Someday I'll write more on that.  For now, I'll offer a few
 simple and near universally applicable tips.
 
@@ -202,7 +222,7 @@ simple and near universally applicable tips.
 
 
 
-### “Simple things should be simple, Complex things should be possible” 
+### “Simple things should be simple, Complex things should be possible” [#simplethings]
   - Attributed to Alan Key, see [Alan Kay’s Approach to Accessible Complexity](https://medium.com/@mdelhaous/alan-kays-approach-to-accessible-complexity-4e3b6610cf60)
   - Back when C++ was young and Rogue Wave was a major player, there was an oft 
     repeated mantra which went something like "Make simple things easy, 
@@ -242,7 +262,7 @@ omitted and some details changed to protect the innocent (I never _proved_
 them guilty) but needless to say these were inspired by actual experience, 
 in which I _strongly_ disagreed with other some other architects.  And yet 
 their motivation wasn't wrong.  YAGNI[^YAGNI] and MVP[^MVP] are both
-reasonable often valuable principles to employ in the design/development cycle. 
+reasonable and valuable principles to employ in the design/development cycle. 
 
 Ultimately, ongoing disagreement between leads and high level team members can cause more 
 damage than simple choosing _either_ option.  Sometimes you just gotta agree 
@@ -256,7 +276,6 @@ then you've found balance.  If you can't, maybe it's time to move on.
 [^notAgile]: which, interestingly enough, are not actually part of the core Agile values and principles
 [^isAgile]: which very much ARE parts of the core Agile values and principles
 
-### Teamwork
 
 ---
 
@@ -280,9 +299,11 @@ I somehow missed out on this - guess that can happen if you spend more time
 actually building stuff instead of playing buzzword bingo and figuring out 
 what new hotness you can leverage for FUD to get more consulting clients by
 convincing them they need to rebuild everything from scratch (looking at
-you, Y2K and Y2K era Java "Enterprise" apps...).   I came across it when
- researching the origin of the  Which is a shame, because
-what little I've seen so far has quite a lot of a _lot_ of parallels with the driving looks _very_
+you, Y2K and Y2K era Java "Enterprise" apps...).   I only recently encounteed 
+it when researching the origin of [Simple things should be...](#simplethings) -
+which is a shame, because what little I've seen so far has quite a bit in common
+with some of the design decisions in my current projects like 
+the [LCPF](/Projects/LCPF/LCPF)
 
 
 ---

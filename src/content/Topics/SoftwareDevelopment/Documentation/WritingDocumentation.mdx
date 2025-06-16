@@ -26,6 +26,21 @@ available options.  Ideally, making the right choices will result in the optimum
 
 ## Some Ingredients of a Perfect Documentation System
 
+### Separation of concerns
+
+Creating _and maintaining_ excellent documentation requires quite a bit of flexibility in terms of both
+ authoring and rendering content.  The degree to which a system achieves this
+ has a major impact on it's long term viability.
+ 
+ Ideally, the "source" for documentation should be concerned
+  - _primarily_ with enriching semantic content, with [extensible custom semantics](#semantic-tagging) for key domain-specific concepts
+  - secondarily with [calling out explicit associations](#referencing) (links) to other content
+    - although _most_ cross-referencing should be auto-generated
+    - especially when using associations to custom sematic concepts as 
+        opposed to links to a specific location in related content
+  - _minimally_ with [formatting](#minimal-formatting), _especially_ for documentation source "embedded"
+    in other files ( i.e. comments or docstrings in a Python file)
+
 ### DRY 
 
 I endeavor to keep source code - both programming and documentation - as
@@ -35,35 +50,104 @@ it may be _possible_, but often imposes significant tradeoffs in
  other aspects of the system.  A _little_ flexibility here can go a long way.
  But only a little, it should still be _mostly_ DRY.
 
+
 One specific desirable directly DRY bit for documentation source is a 
-  shorthand/abbreviation mechanism for frequently repeated domain/project specific bits - especially those that might change.
-  - this is vague, intentionally
-  - can be repetitive text content
-  - can also be text in meta-content, such as a relative base path for links to another section
-  - needs to be inheritable, i.e. use defined bits from higher/enclosing scopes
+shorthand/abbreviation mechanism for frequently repeated 
+domain/project specific bits - especially those that might change.
+  - this is intentionally vague, but _some_ examples include
+    - [global definitions](#global-definitions)
+    - [semantic tagging](#semantic-tagging)
+    - substitution text in meta-content, such as a relative base path for links to another section
+    - all of which needs to be inheritable, i.e. use defined bits from higher/enclosing scopes
 
 [^DryManifesto]: see the [Top three rules for maintainable complex systems](Manifesto#TriDRY) in my [Manifesto](Manifesto)
 
-
-### Separation of concerns
-
-Creating _and maintaining_ excellent documentation requires quite a bit of flexibility in terms of both
- authoring and rendering content.  The degree to which a system maintains
- a separation of concerns will have a major impact on the long term viability 
- of the system.  
  
- Ideally, the "source" for documentation should be concerned
-  - primarily with enriching semantic content
-    - with extensible custom semantics for key domain-specific concepts
-    - for example, for API documentation of an object method, clearly 
-      identifying "this is the name" and "this is the type" of a parameter.
-        - Doesn't necessarily need to be explicit - many systems can infer much of this by analyzing source code
-        - DOES need to support explicit overrides when automated inference is used, in cases where the automation "guesses wrong"
-  - secondarily with calling out explicit associations (links) to other content
-    - although _most_ cross-referencing should be auto-generated
-    - especially when using associations to custom sematic concepts as 
-        opposed to links to a specific location in related content
- 
+### Semantic Tagging
+
+There should be a concise mechanism for tagging ontology, i.e. 
+[semantic annotation](https://www.ontotext.com/knowledgehub/fundamentals/semantic-annotation/)
+to facilitate creation and use of an _external_ (relative to individual 
+documentation source files) domain/project specific knowledge graph.  At a minimum,
+this requires 
+  - a concise syntax for identifying references to entities within the knowledge graph
+    - _without knowing the location of the entity's definition_, only that it ought
+      to have a system-unique definition somewhere
+  - a syntax for defining ontology : entities types, including their attribute and potential relationship types
+  - a syntax for defining taxonomy : entity instances, including actual attributes and relationships to other entities
+
+For example, consider the concept "Project". 
+    - In the context of this particular site and it's documentation,
+       a "Project" is, well, a project in the regular sense of the word.
+       But it _also_
+      - has it's source code in one (or more) git repos
+      - is primarily implemented in a specific language
+      - may be related to other projects (as parents, children, peers, ...)
+    - 
+Therefore I would like to be able to
+  - define the ontology necessary to capture these semantics
+    - identify entity types
+        - Project, repo, programming language, ...
+    - identify relationships
+        - Projects can be associated with 0..N repos, languages, ...
+        - Repos have a primary origin URL, ...
+    - with these potentially inheriting and refining definitions from higher levels
+  - mark and annotate entities within the documentation
+
+to capture 
+    - [LCPF](/Projects/LCPF/LCPF)
+      - is a Project
+      - has a repo at https://gitlab.com/lumensalis/lumensaliscplib
+      - is written in Python
+    - [LCPPF](/Projects/LCPPF/LCPPF)
+      - is written in C++
+    - [LumenSalis.com](https://gitlab.com/lumensalis/wwwlumensalis) (this website)
+      - is written in MDX and Typescript/Next.js
+      - refers to all the other projects
+    - LWUI (the Lumensalis WebUI)
+      - is a sub-project of LCPPF
+      - written in Typescript/Next.js
+      
+There are numerous existing approaches which already do some (or all) of this.
+However, finding one that plays well with the _rest_ of the 
+"Perfect Documentation System" isn't so easy.
+  - creating the ontology "metadata" description
+    - some existing solutions are limited in scope and can't fully support the desired semantic 
+  tagging feature set
+    - more advanced options (especially those based on XML schemas) can be
+      extremely tedious without UI assistance
+    - may require using a different format/syntax than most other documentation source
+ - _using_ the ontology within documentation source
+   - ideally is done with an editor with awareness of and full support for
+     - the documentation source format 
+     - the general file source format
+       - example : documentation source is contained within comment blocks in a C++ source file
+     - the knowledge graph ontology (i.e. entities types, ...) 
+     - the knowledge graph taxonomy (i.e. entities, ...)
+     - context sensitive auto-completion and warning/error indicators fully incorporating _all_ of the above
+
+There are also many systems which can _partially_ annotate semantics
+automatically, especially for API documentation using tools like Doxygen.
+
+### Global Definitions
+
+There should be a concise mechanism for establishing reusable aliases for 
+documentation content.  For example, my current CircuitPython framework project is
+ rather unimaginatively named the **Lumensalis CircuitPython Framework**, and
+ referred to as the LCPF throughout the documentation.  Eventually I might come up with a better name.  
+If and when I do, it would be preferable to have a simple way to specify 
+a project wide alias to change the displayed representation of LCPF whenever 
+it is used.  
+
+Note that this is _not_ just a simple search and replace,  as it only impacts displayed text. 
+For example, given the Markdown source
+```MDX
+as opposed to LCPF [device configuration](Projects/LCPF/Concepts/DeviceConfiguration)  ...
+```
+  - LCPF in `in the LCPF` would be replaced
+  - LCPF in `[device configuration](Projects/LCPF/Concepts/DeviceConfiguration)` would NOT be replaced
+
+
 ### Locality
 
 The source for documentation is often directly correlated with artifacts defined 
@@ -87,12 +171,32 @@ editors for graphical content), etc.  Separating artifact source
 (directories, CMS systems, SCM repos, ...) further exacerbates the problem.
 
  
+### Familiarity
+
+Anything close to a "Perfect Documentation System" will have a learning curve 
+for anyone needing to author documentation content.  This makes incorporating 
+existing, widely used approaches or systems like advantageous. 
+
+Consider perhaps the most widely used current approach for source documentation,  Markdown:
+  - most developers already use it 
+  - most IDEs and devOps pipelines already have some degree of support for it
+  - github, gitlab, etc. automatically auto-format Markdown code
+  - it's "just text" so it works everywhere
+  - it's relatively easy to read "raw" without a formatted preview
+
+There are many other potential syntaxes / formats for documentation source,
+some (all?) of which are arguably better than Markdown in the wider context 
+of a "Perfect Documentation System",  but Markdown gets an A+ for 
+familiarity and tooling.
+
+
 ### Self documenting code [#self-documenting-code]
-  In theory, perfect code needs no documentation ... HOWEVER
+
+In theory, perfect code needs no documentation ... HOWEVER
     - code cannot be written perfectly in an imperfect language
     - AND there _are_ no perfect languages
     - THEREFORE "self documenting code", while itself being a Good Thing, can 
-       almost always be improved with well written additional documentation
+        almost always be improved with well written additional documentation
 
 There are many systems for "self documenting code", such as 
 [Doxygen](https://www.doxygen.nl/) and [Sphynx](https://www.sphinx-doc.org/) 
@@ -111,14 +215,14 @@ They usually include
   - occasionally can extract further documentation relevant content from language 
    specific annotations/attributes/metadata
   - usually requires some post processing pass to extract the documentation content
-   - although sometimes is available directly within the application without
+   - although sometimes makes content directly available directly within the application without
      any need for additional processing, such as Python docstrings
 
   semantic content by parsing the source, augmented by additional descriptive
   documentation source (typically in comments, sometimes in various language 
   specific annotation/attribute/metatdata extension syntax such as python docstrings  )
 
- ### Minimal formatting in content
+ ### Minimal formatting in content [#minimal-formatting]
  
  Documentation source should only minimally concerned with formatting.  The more specific the
 formatting in the source, the more challenging it becomes to render the documentation in a high quality form
@@ -140,6 +244,8 @@ in some ~~manner~~ which <sub>causes</sub> it to <sup>stand</sup> <ins>out</ins>
 in some ~~manner~~ which <sub>causes</sub> it to <sup>stand</sup> <ins>out</ins>`
 
 ### Referencing
+
+...  coming soon ...
 
 
 ### Tooling
@@ -175,8 +281,51 @@ intended for printing handouts at a conference presentation where you want match
 recommended stylistic conventions for that conference's proceedings.
 
 
+### Temporal awareness
+
+Documentation changes over time.   The ability to rerender documentation based
+on the source as it existed at a point in the past is important.  At the
+_very_ least, the ability to rerender documentation for prior version releases is critical.
+
+This, along with other useful features like forks and branches, is more or less
+"free" when documentation source resides in standard files with a text-based 
+format simply by using a good SCM (typically **git**).  However, if your
+documentation source is maintained in a CMS (for instance, WordPress) this 
+might prove more challenging.
 
 ## Documentation approach for this site
 
-Part of the reason I'm overhauling this site
-I am 
+I have been primarily using a mix of PyDoc style annotations and Markdown
+within Python and C++ source for a while,  but Markdown is a bit limited -
+especially for additional free-form documentation outside of program
+source code (for example, the documentation content in these
+pages on Lumensalis.com).
+
+Part of the reason I'm overhauling this site is to experiment with MDX as 
+a primary format for document content.  This includes identifying usability
+issues.  For example, having a central DRY location to identifying project-specific 
+definitions for terms - like MDX - so that it's use can be detected
+and prettied up automatically instead of needing to manually 
+add a markdown link `every time I mention [MDX](/terms#MDX)`.  It looks like
+implementing this should be feasible with a combination of custom MDX 
+components and post-processing.
+
+MDX seems to be a significant improvement over vanilla Markdown, but there
+are still some important things it doesn't do, especially in terms of 
+custom semantics.  I could hack in some semantics support with custom
+components, but since that wouldn't be part of the "core" MDX feature
+set, they won't get any special treatment from MDX integrations like IDE
+extensions.  That's unfortunate, because the widespread availability of MDX
+tooling is one of it's major advantages.
+
+There are other potential documentation source formats, such as 
+[AsciiDoc](https://docs.asciidoctor.org/asciidoc/latest/),
+[DocBook](https://docbook.org/),
+and [reStructuredText](https://en.wikipedia.org/wiki/ReStructuredText),
+and even [LaTeX](https://www.latex-project.org/) have deeper support for
+some features useful in software documentation, and provide extension
+mechanisms for semantic tagging that aren't as removed from the core 
+functionality.
+
+
+
