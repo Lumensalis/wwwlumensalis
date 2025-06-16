@@ -1,7 +1,7 @@
 import type { MetaRecord } from 'nextra';
 
 const meta : MetaRecord = {
-    'LCPF' : {    },
+    'index' : {    },
     'Concepts' : {},
     'Behaviors':{},
     'History':{}

@@ -1,7 +1,7 @@
 import type { MetaRecord } from 'nextra';
 
 const meta : MetaRecord = {
-    'LCPPF' : {
+    'index' : {
             'title':"C++ Firmware"
     },
     'History' : {
