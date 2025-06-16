@@ -1,0 +1,182 @@
+---
+title: Writing Documentation
+---
+>[!Note]
+>
+> This is a brand new document as of June 14, 2025.  The _ideas_ are not new - 
+> I've been thinking about and experimenting with these concepts for decades.
+> But it's still somewhat stream-of-thought and only [lightly edited](../Manifesto#shortissweet). It should
+> become more refined, complete, and better organized in the near(ish) future
+
+I've tried to find the "perfect documentation system" many times over the years.
+It's a quest for which I've intentionally rationed my efforts, to keep it from
+becoming a major obsessive distraction from "real work".  But I consider good 
+documentation to be extremely valuable, so I keep trying. I've tried a lot of different 
+approaches.  None of them have been ideal, although some come much closer
+than others.
+
+The following items are my expectations for a  "perfect documentation system".
+I've found systems which provide a good (sometimes excellent) solution for each of these.
+A few can cover most of them.   Nothing really satisfies all of them.  I'm not 
+certain _any_ system can perfectly satisfy all of them, as some combinations
+introduce a bit of contradictory tension. This requires tradeoffs and compromise, 
+which _at best_ will be based on intentional educated choices among the
+available options.  Ideally, making the right choices will result in the optimum available system
+ _for a specific project at that time_.
+
+## Some Ingredients of a Perfect Documentation System
+
+### DRY 
+
+I endeavor to keep source code - both programming and documentation - as
+[DRY](../Manifesto#dry) as reasonably possible.  However, uncompromising 
+adherence to that ideal can become problematic in a documentation system -
+it may be _possible_, but often imposes significant tradeoffs in
+ other aspects of the system.  A _little_ flexibility here can go a long way.
+ But only a little, it should still be _mostly_ DRY.
+
+One specific desirable directly DRY bit for documentation source is a 
+  shorthand/abbreviation mechanism for frequently repeated domain/project specific bits - especially those that might change.
+  - this is vague, intentionally
+  - can be repetitive text content
+  - can also be text in meta-content, such as a relative base path for links to another section
+  - needs to be inheritable, i.e. use defined bits from higher/enclosing scopes
+
+[^DryManifesto]: see the [Top three rules for maintainable complex systems](Manifesto#TriDRY) in my [Manifesto](Manifesto)
+
+
+### Separation of concerns
+
+Creating _and maintaining_ excellent documentation requires quite a bit of flexibility in terms of both
+ authoring and rendering content.  The degree to which a system maintains
+ a separation of concerns will have a major impact on the long term viability 
+ of the system.  
+ 
+ Ideally, the "source" for documentation should be concerned
+  - primarily with enriching semantic content
+    - with extensible custom semantics for key domain-specific concepts
+    - for example, for API documentation of an object method, clearly 
+      identifying "this is the name" and "this is the type" of a parameter.
+        - Doesn't necessarily need to be explicit - many systems can infer much of this by analyzing source code
+        - DOES need to support explicit overrides when automated inference is used, in cases where the automation "guesses wrong"
+  - secondarily with calling out explicit associations (links) to other content
+    - although _most_ cross-referencing should be auto-generated
+    - especially when using associations to custom sematic concepts as 
+        opposed to links to a specific location in related content
+ 
+### Locality
+
+The source for documentation is often directly correlated with artifacts defined 
+by other "source" forms, such as software code, electronic schematics, 
+complex layered object/vector/mesh graphic formats, etc.  Several
+factors become significantly impacted by locality, or the "distance" between
+the source of the artifact and the source of it's documentation.  The greater the 
+distance between the artifact source and the documentation source, the more 
+challenging it becomes to keep the documentation up to date.
+
+Various systems for ["documentation in the source code"](#self-documenting-code) 
+provide excellent locality as the source for the code and documentation can be
+adjacent in the same file.  Most of these  also introduce other benefits - and sometimes challenges - in a documentation system.
+
+On the other hand, a requirement to keep document source in separate files
+reduces locality. This may be mandated intentionally, perhaps by corporate
+policy. Or it may be imposed by technical integration limitations do to binary source 
+file formats, inflexible tools for source editing (especially with WYSIWYG
+editors for graphical content), etc.  Separating artifact source
+ and document source files into distinct locations
+(directories, CMS systems, SCM repos, ...) further exacerbates the problem.
+
+ 
+### Self documenting code [#self-documenting-code]
+  In theory, perfect code needs no documentation ... HOWEVER
+    - code cannot be written perfectly in an imperfect language
+    - AND there _are_ no perfect languages
+    - THEREFORE "self documenting code", while itself being a Good Thing, can 
+       almost always be improved with well written additional documentation
+
+There are many systems for "self documenting code", such as 
+[Doxygen](https://www.doxygen.nl/) and [Sphynx](https://www.sphinx-doc.org/) 
+(both of which support C++, Python, and a variety of other languages ),
+PyDoc,  [JSDoc](https://jsdoc.app/), ... 
+
+
+They usually include 
+  - prescribed techniques and syntax for including documentation source within
+ the programming language source code
+    - Typically embedded within comments 
+    - often with domain specific markup for enhanced semantics, such as the
+     ubiquitous `@param ...` for documenting parameter names
+  - often augmented by analyzing the parsed AST surrounding or adjacent to 
+  comment-embedded documentation to extract context (associated class, method, file, ...)
+  - occasionally can extract further documentation relevant content from language 
+   specific annotations/attributes/metadata
+  - usually requires some post processing pass to extract the documentation content
+   - although sometimes is available directly within the application without
+     any need for additional processing, such as Python docstrings
+
+  semantic content by parsing the source, augmented by additional descriptive
+  documentation source (typically in comments, sometimes in various language 
+  specific annotation/attribute/metatdata extension syntax such as python docstrings  )
+
+ ### Minimal formatting in content
+ 
+ Documentation source should only minimally concerned with formatting.  The more specific the
+formatting in the source, the more challenging it becomes to render the documentation in a high quality form
+
+Simple formatting concepts like a Markdown-ish `_emphasize this_` _seem_ reasonable, but even 
+these can quickly become problematic.  For example, if mentioning the name of an
+object type in documentation source, it "feels" _right_ to __identify__ the ___type___ 
+in some ~~manner~~ which <sub>causes</sub> it to <sup>stand</sup> <ins>out</ins>[^inMarkdown]. 
+ The problem here is that lacking a better alternative, those who author documentation
+ part time as an adjunct to other primary responsibilities may indeed add some form of emphasis, 
+ but it will almost inevitably become applied inconsistently.  Something like ```
+ it "feels" right to identify the \<OurTypeConcept>type\</OurTypeConcept>```
+ allows the semantics to be clearly and unambiguously specified in the documentation 
+ source, while ensuring that anything marked `<OurTypeConcept>` will be
+ formatted consistently throughout an entire rendered form of the documentation.
+ Of course, it's not _quite_ that simple...
+
+[^inMarkdown]: as Markdown source, this would be ` "feels" _right_ to __identify__ the ___type___ 
+in some ~~manner~~ which <sub>causes</sub> it to <sup>stand</sup> <ins>out</ins>`
+
+### Referencing
+
+
+### Tooling
+
+IDE integrations, plugins for dynamic rendering, ...  there is a significant
+ecosystem out there of various frameworks, modules, extensions, plugins, etc...
+for assisting with authoring, rendering, and deploying your documentation.
+
+The _right_ ones can significantly improve the authoring experience, 
+ particularly with solid support for
+  - "syntax" (of the document source form) checking
+  - intelligent link management / cross referencing
+    - auto complete
+    - _project wide_ automated bad link detection (i.e. 'lint' for your doc source links)
+  - preview
+  
+
+### Intelligent indexing
+
+  - Search indexing 
+  - auto semantic linking
+
+### Flexible Rendering
+
+An ideal rendering system allows a common shared set of documentation source 
+to be cleanly rendered to many different output formats, such as PDF, HTML, RTF, XML, ...
+It also allows consistent theme/styling to be applied through the entire
+ body of documentation, especially for domain or even project-specific semantics.  
+ For example, you might want all `\<OurTypeConcept>` spans in bold with a
+slightly larger font size and a highlighted background for HTML output, 
+but have it in a bold italicized monospace font for a custom PDF output 
+intended for printing handouts at a conference presentation where you want match the 
+recommended stylistic conventions for that conference's proceedings.
+
+
+
+## Documentation approach for this site
+
+Part of the reason I'm overhauling this site
+I am 

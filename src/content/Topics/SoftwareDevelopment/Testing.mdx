@@ -1,0 +1,46 @@
+---
+title: Testing
+---
+
+>[!Note]
+>
+> Another new document (as of June 15, 2025).  
+>  I'll have a lot to say here, but I've thrown down some basic high level observations
+
+
+
+ - Using junior people for testing may be reasonable If you build simple, low risk commodity products.
+If you only have junior developers writing and maintaining test code for
+ complex systems, you're not saving as much as you think.
+  
+  - If you don't have solid testing harnesses with good CI testing, you're wasting time
+
+  - repeatable testing is important - friends don't let friends ship regressions
+
+ 
+
+## Testing Challenges in Realtime(ish) systems
+  
+Unfortunately, some things are very hard to test properly.  This is 
+especially true of reactive, real-time systems. Subtle changes of 
+sequence and timing in external activity/inputs can change the execution path.  
+Reactions which produce external outputs can cause feedback and ripple effects
+in a real world deployment which simplistic testing might never trigger.
+
+
+
+### Limits of Unit Tests
+There are always _some_ things you can still test with traditional unit testing.  
+Where it can be used, it should be.  
+
+### Sequencing Sensitivity
+Theoretically, a purely stateless system would be immune to sequencing 
+related problems.  However that's only theory,  and most complex real-time
+systems are anything but stateless (try implementing a stateless state-machine...).
+
+
+
+
+
+
+

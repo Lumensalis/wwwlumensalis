@@ -2,35 +2,287 @@
 title: Software Engineering Manifesto
 ---
 
-This is a loose collection of maxims and aphorisms I've developed over the years.
+## How Things Should Be Done
 
-## Immutable Truths
-  - Perfect choices rarely exist in complex systems
-  - A foolish consistency is the hobgoblin of little minds, but not all consistency is foolish
+The following contains concepts and principles which I believe to be
+fundamental requirements for designing and implementing "good" 
+complex systems.   It is by no means an exhaustive list.  It still have 
+a bit of [editing](#short-is-sweet) left to do.  But it offers some insight 
+into my perspective on what matters for developing software.
+
+### Exceptions to every rule
+
+These can be read as applied as "rules", and doing so may produce optimal
+results in most cases.  However, no rule works as intended everywhere. 
+IMHO ___there are no perfect rules|principles|methodologies|programming
+languages|etc___ for developing complex systems.  Those who insist otherwise
+just haven't hit the limits of their sacred cows yet.  Those who know better 
+retain an open mind, and stay willing to consider new ideas, adapt
+accordingly, and keep learning.  
+
+## Original Tidbits
+
+This section a loose collection of maxims and aphorisms I've developed over the years...
+
+### Performance / Optimization
+
+>  Zeroth law of optimization : It doesn’t matter how fast you can get the wrong answer
+
+>  <span id="cantimprove">You can’t improve what you can’t measure</span>
+
+### Reliability in Complex Systems
+
+> <span id="TriDRY">Top three rules for maintainable complex systems</span>  
+>   &nbsp;&nbsp;&nbsp;&nbsp; Don’t repeat yourself  
+>   &nbsp;&nbsp;&nbsp;&nbsp; Don’t repeat yourself  
+>   &nbsp;&nbsp;&nbsp;&nbsp; Don’t repeat yourself  
+
+> <span id="FoolishConsistency">A foolish consistency is the hobgoblin of little minds, but not all consistency is foolish</span>
+
+> Provenance matters
+
+### Testing
   
-## Performance / Optimization
-  - Zeroth law of optimization : It doesn’t matter how fast you can get the wrong answer
-  - You can’t improve what you can’t measure
+> Everything you build will get tested - the only question is when and by whom.  
+> Clients and customers are quite adept at finding whatever you missed.
 
-## Quality
-  - Top three rules for maintainable complex systems 
-    - Don’t repeat yourself
-    - Don’t repeat yourself
-    - Don’t repeat yourself
+> If you want to reach the moon, test with your best.
 
-## Testing
-  - Everything you build will get tested - the only question is when and by whom.  Clients and customers are quite adept at finding whatever you missed.
-  - Using junior people for testing may be reasonable If you build simple, low risk commodity products.   If you want to reach the moon, test with your best.
-  - If you have to fix something twice, you’re doing it wrong.
-  - Provenance matters.
+> If you have to fix something twice, you’re doing it wrong.
 
-## Documentation
-  - Perfectly written code doesn't need Documentation
-    - HOWEVER, code cannot be written perfectly in an imperfect language
-    - AND there _are_ no perfect languages
-    - THEREFORE "self documenting code", while itself being a Good Thing, can 
-       usually be improved with well written additional documentation
+> Friends don't let friends ship regressions
+
+## Adopted Precepts
+
+Concepts I generally endorse, although without the witty phrasing
+
+### Balance and Harmony
+
+All these are beliefs _I_ hold strongly.  I don't insist that others do - I've
+often worked talented people I sincerely respect who think quite differently 
+on a few of these.  There's nothing on this list I consider immutable -
+other than _perhaps_ "exceptions to every rule". Maybe.
+
+OTOH if you refuse to discuss or consider dissenting opinions you're dealing 
+with dogma, not science or engineering.  That said, questioning is good and
+should be _encouraged_(although there are some reasonable caveats).
+
+
+### Complexity and Compromise
+
+ALL complex systems must deal with uncertainty (even the awful ones  - typically by
+crashing) and typically juggle a formidable list of requirements.  Consider
+ the "Good, Fast, Cheap" cliche - simple (at least on the surface) but
+virtually impossible to pull off in practice.  The requirements for complex 
+projects will inexorably contain a few desirable deliverables which are
+mutually exclusive or simply out of reach.  They must build upon a
+collection of decisions related to tradeoffs concerning these requirements (representable by a 
+[DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph) if you're
+really lucky).  
+
+But invariably, whether you blame Murphy, 
+the [uncertainty principle](https://en.wikipedia.org/wiki/Uncertainty_principle), 
+[TNSTAAFL](https://en.wikipedia.org/wiki/No_such_thing_as_a_free_lunch),
+or the whims of fate, the chances of finding a decision set that _completely_ 
+satisfies _all_ the requirements for a complex system may deal in probabilities on the scale
+of rolling dice until the heat death of the universe.
+
+For example, I never encourage violating [DRY](#DRY), but there are legitimate cases 
+where I have (and would again).  Sometimes disparate toolchains prevent simple
+sharing, and development of custom DevOps integration to stay DRY _reliably_ 
+wouldn't be cost effective.  Some forms of code sharing may breach regulatory 
+or security requirements regarding isolation between development groups
+responsible for different areas.
+
+
+Perhaps you disagree with me - in fact, I suspect I might agree with 
+some disagreements. For example, we may have significantly different 
+definitions of what constitutes a "complex system" (even without
+contradicting any of the above).  Or you may object that nothing 
+unattainable should be in the requirements in the first place.[^unattainable]
+This could lead to a plausible scenario in which one _might_ achieve a
+ "perfect decision set" without winning the cosmic lottery.  
+
+[^unattainable]: A valid objection in the beginning.  However, requirements _evolve_ and - 
+especially for complex systems - sometimes come to include the impossible (at 
+least to the extent of "we have no idea how to pull that off").  That 
+doesn't mean you must give up, but it _does_ mean figuring out where to
+compromise and what to prioritize to get the best result possible.
+
+And yet, doing so reinforces the primary premise, which is that
+_there are no perfect rules_.  We simply lack the means to
+comprehensively and unambiguously define rules and requirements with
+absolute clarity and no chance of misunderstanding.  Chaos and uncertainty
+are intrinsic, transcendent, and unavoidable.  There will _always_ be exceptions.
+
+So embrace the chaos.  Learn to love tradeoffs - they can be a positive 
+source of differentiation if you can find a better decision set than the 
+competition.  Accepting compromise doesn't always mean you failed, and it _can_ mean
+you're on the right track towards success the inflexible can never reach.
+
+
+### DRY
+
+I'm rather [fanatical](#TriDRY) about the value of the 
+[DRY principle](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)(Don't Repeat Yourself).
+I consider anything that violates it to be _at best_ a source of technical debt.
+It almost invariably increases risks within the the system[^dryRisks].
+It also often becomes a major constraint on the ability to scale the complexity 
+of larger systems.
+
+[^dryRisks]: This _can_ be mitigated with robust - often custom - DevOps 
+tooling in cases were such duplication can be provably "correct", therefore 
+initial mismatches (typically typos) or incomplete synchronization on changes
+ can be caught in the
+[CI](https://en.wikipedia.org/wiki/Continuous_integration) process.  With this in place, handling
+each duplication still adds requires additional coding effort, but at least the risk
+of silently introducing flaws by failing to keep multiple source locations
+synchronized is dramatically reduced.
+
+### Short is Sweet
+
+> Brevity is the soul of wit
+
+> I have only made this letter longer, because I have not had the time to make it shorter[^letterLonger]
+
+[^letterLonger]: Blaise Pascal  https://wist.info/pascal-blaise/10466/_
+
+All else being equal, shorter is _usually_ better.   There are exceptions, particularly with [naming](#readablecode).
+But expressing all that you need to express (whether in prose or code) in it's
+most concise form takes effort, and usually some time to edit and reflect.
+
+If your reading this document (and many of the others on this site) in the early
+summer of 2025, it should be a good example.  It (or at least the existing 
+content will be refined and condensed) _will_ get smaller before long.
+
+I've observed a similar dynamic with source code.  Some of the _best_ code 
+actually gets smaller over time, while _increasing_ in flexibility,
+reliability, and performance.  However there is an additional dynamic in play, 
+beyond the extra work required for concise prose.  With code, there's often 
+a lot you don't know ( interactions and use cases in practice, performance, 
+...) until you've gotten the first cut up and running.  Intentional observation 
+and analysis over time can reveal hidden correlations and inspire better ideas.  
+After which _judicious_ refactoring can result in quantifiable improvements in capability 
+and performance _and_ a reduction in size and complexity (especially in interfaces).
 
 
 
+### Documentation matters
+  This is important enough to have it's [own page](WritingDocumentation)
+  
+### Testing matters
+    Also worthy of it's [own page](Testing)
 
+### Write Readable Code [#readablecode]
+
+Amateur and junior developers (and even a few brilliant seasoned ones) may 
+see writing code as a way to show how clever they are.  Or be obsessed with 
+code formatting (making it as compact as possible or mind-numbingly dispersed), 
+or employing the latest flavor-of-the-month syntactic sugar every change 
+they get.
+
+Older, wiser, experienced types have had to _read_ far more code than they've
+_written_, which instills an appreciation for the value of readable code.  In
+many cases, readability of the code is arguably more important to the
+success of a project than more commonly sought "priorities" such as
+performance optimization (especially outside the fast path - you
+_did_ [identify your fast path](#cantimprove) first, right?). 
+
+There are many ways to improve the readability of your code, some of which is
+language specific. Someday I'll write more on that.  For now, I'll offer a few
+simple and near universally applicable tips.
+
+  - Names matter. 
+    - <code lang='cpp'>void DontFearDescriptiveNames( int onTheOtherHandYouCanTakeThisToFar );</code>
+  - Coding style matters
+    - _which_ coding style you use - how you manage indenting code blocks, 
+      whether you use camelCase or under_scores, etc is ultimately not that 
+      significant
+    - what _is_ significant is picking a style and using it consistently
+
+
+
+### “Simple things should be simple, Complex things should be possible” 
+  - Attributed to Alan Key, see [Alan Kay’s Approach to Accessible Complexity](https://medium.com/@mdelhaous/alan-kays-approach-to-accessible-complexity-4e3b6610cf60)
+  - Back when C++ was young and Rogue Wave was a major player, there was an oft 
+    repeated mantra which went something like "Make simple things easy, 
+    and hard things possible".  While researching it's origin to see if that
+    might have been an original saying (we had some very bright bulbs in 
+    those days) I found the Alan Keys quote, from which it was
+    almost certainly paraphrased.  
+
+### Successfully employing a methodology is more than following checklists
+  
+I've more than once butted heads with well-meaning Agile fanboys who 
+insisted on dogmatic application of commonly Agile-associated buzzwords [^notAgile]
+like YAGNI[^YAGNI][^notAgile] and MVP[^MVP].  Somehow they simultaneously
+_missed_ the significant role of communicating customers and understanding 
+their needs in the Agile methodology[^isAgile]
+       
+Obviously, implementing features you don't need yet is usually a **bad** 
+thing.  Best case, it's an opportunity cost -and that's only if you actually
+get it right _and_ it proves useful over time.
+
+However, designing interfaces/APIs which _accommodate_ (but not implement)
+known, rational future requirements _can_ be **good**.  Rejecting such from
+knee-jerk adherence to YAGNI/MVP dogma is... **not**.  
+
+And citing YAGNI/MVP as a justification to avoid the up front work necessary 
+to provide a DRY interface wrapper around high risk business critical features - 
+for example,  making sure all financial transactions against against the ledger
+_holding the account of record_ is centralized, secured, and thoroughly tested -
+is a waste of time because copy&paste reuse of SQL code _which modifies 
+the ledger_ "is quicker and easier" and "we should be Agile" and "we're stuck
+with junior developers" and "you're over-engineering things" - _in an application
+for PCI compliant payment processing_[^ledger]...  Ok, deep breath, 
+dismounting soapbox, putting that pet peeve back on the shelf.
+
+This demonstrates some of the challenges of maintaining balance.  Names were
+omitted and some details changed to protect the innocent (I never _proved_
+them guilty) but needless to say these were inspired by actual experience, 
+in which I _strongly_ disagreed with other some other architects.  And yet 
+their motivation wasn't wrong.  YAGNI[^YAGNI] and MVP[^MVP] are both
+reasonable often valuable principles to employ in the design/development cycle. 
+
+Ultimately, ongoing disagreement between leads and high level team members can cause more 
+damage than simple choosing _either_ option.  Sometimes you just gotta agree 
+to disagree, and if you can still achieve consensus and present a unified front[^unified] 
+then you've found balance.  If you can't, maybe it's time to move on. 
+
+
+[^unified]: which means compromise for at least one - maybe all - of the parties involved
+[^YAGNI]: An [Extreme Programming practice](https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it) which strongly discourages adding functionality before you need it
+[^MVP]: [Minimum Viable Product](https://en.wikipedia.org/wiki/Minimum_viable_product)
+[^notAgile]: which, interestingly enough, are not actually part of the core Agile values and principles
+[^isAgile]: which very much ARE parts of the core Agile values and principles
+
+### Teamwork
+
+---
+
+[^ledger]:  If you ever read this - you know who you are - I still believe 
+    you're a bright, experienced, and talented developer, I sincerely hope all that 
+    copypasta reuse never blew up in your face, and I suspect you've 
+    _probably_ gotten away with it and managed to put a more robust solution
+    in place by now.  But I could not and will 
+    not ever endorse taking shortcuts incurring that degree of risk in a financial 
+    application.  If I had built
+    trading systems that way they would have all crashed and gone 
+    bankrupt within months.
+  
+
+
+# Notable Mentions
+
+### [Domain Driven Design](https://en.wikipedia.org/wiki/Domain-driven_design)
+
+I somehow missed out on this - guess that can happen if you spend more time 
+actually building stuff instead of playing buzzword bingo and figuring out 
+what new hotness you can leverage for FUD to get more consulting clients by
+convincing them they need to rebuild everything from scratch (looking at
+you, Y2K and Y2K era Java "Enterprise" apps...).   I came across it when
+ researching the origin of the  Which is a shame, because
+what little I've seen so far has quite a lot of a _lot_ of parallels with the driving looks _very_
+
+
+---
