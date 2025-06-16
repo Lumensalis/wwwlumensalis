@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import 'katex/dist/katex.min.css'
 
 import { Footer, Layout, Navbar } from 'nextra-theme-docs';
 import { Banner, Head } from 'nextra/components';

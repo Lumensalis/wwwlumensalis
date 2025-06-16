@@ -7,7 +7,7 @@ const withNextra = nextra({
   //theme: 'nextra-theme-docs',
   //themeConfig: './theme.config.tsx',
   // contentDirBasePath: '/content' 
-
+    latex:true
   /*
    turbopack: {
        resolveAlias: {

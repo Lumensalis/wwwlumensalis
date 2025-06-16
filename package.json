@@ -7,9 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-     "postbuild": "pagefind --site .next/server/app --output-path out/_pagefind"
+    "postbuild": "pagefind --site .next/server/app --output-path out/_pagefind"
   },
   "dependencies": {
+    "katex": "^0.16.22",
     "next": "15.3.3",
     "nextra": "latest",
     "nextra-theme-docs": "latest",
