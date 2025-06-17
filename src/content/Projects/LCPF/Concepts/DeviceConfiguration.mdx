@@ -4,7 +4,20 @@ title: Device Configuration
 
 In order to use all the nifty hardware that provides Inputs and/or Outputs, 
 LCPF needs to know what hardware you are using.  This is usually a fairly
-complex part of an embedded project.  LCPF makes this much easier _if_ you 
+complex part of an embedded project.  LCPF makes this much easier[^5].  For example, if you
+use a [Lolin S2 Mini](https://www.wemos.cc/en/latest/s2/s2_mini.html) with a 
+[Terrain-Tronics Caernarfon Castle Kit](https://www.tindie.com/products/terraintronics/caernarfon-castle-kit/), 
+ IR remote,  35 NeoPixel LEDS, and two servo motors,  your entire code for device configuration could be
+as simple as 
+```python 
+    caernarfon = mainManager.TerrainTronics.addCaernarfon(neoPixelCount=35)
+    doorMotor = caernarfon.initServo( 1, "doorDrive" )
+    windowMotor = caernarfon.initServo( 2, "windowMotor" )
+    remote = caernarfon.addIrRemote()
+```
+No pins assignments, no addresses, no board types - LCPF handles all that for you.[^5]
+
+ _if_ you 
 stick within the "curated" set of hardware options.  For example, if you
 use a [Lolin S2 Mini](https://www.wemos.cc/en/latest/s2/s2_mini.html) with a 
 [Terrain-Tronics Caernarfon Castle Kit](https://www.tindie.com/products/terraintronics/caernarfon-castle-kit/), 
@@ -60,3 +73,5 @@ LEDS, and two servo motors,  your entire code for device configuration could be
 
 
 [^1]: D1MPC = D1 Mini Pin Compatible, accepts Wemos Mini shields (like Terrain-Tronics Castle boards)
+[^3]: Currently supported controllers include Lolin S2 Mini, Lolin S3 Mini, and the Lilygo T-OI Plus
+[^5]: _IF_ you  stick within the "curated" set of hardware options.  However, there are already a few dozen supported devices and the list continues to grow.  

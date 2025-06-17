@@ -1,7 +1,11 @@
 ---
 title: Overview
 ---
+
+
 # Lumensalis CircuitPython Framework
+
+## Overview
 
 The LCPF is designed to help non-programmers incorporate interesting and
 complex effects into their projects.  It doesn't completely eliminate the
@@ -10,66 +14,21 @@ need to do a little "coding", but it makes it much easier[^1].
 The LCPF is not as powerful as, nor is it a replacement for,
  my [C++ firmware](../LCPPF).  However, it
   - uses many similar concepts
+  - is available now (my C++ firmware has yet to be publicly released)
+    - <Image src="/images/gitlab-logo-500.png#left" alt="GitLab Logo" width={49} height={49} /> [LCPF repo](https://gitlab.com/lumensalis/terraintronicscp) on Gitlab
   - is easier to get started
     - more "new user" documentation and examples
     - simpler hardware configuration
     - convenient workflow options
-  - is available now (my C++ firmware has yet to be publicly released)
 
-There are a few fundamental concepts used in the LCPF 
+If you're interested in working with the LCPF,  the best way to get started
+joining the [Lumensalis Discord Server](https://discord.gg/22EStXpkh8)
 
-### Inputs
+## Quick start
 
-Think of inputs like senses - taste, touch, sight, hearing... they are 
-channels of incoming information about the environment in which your 
-project operates.  Practical examples include
-  - Switches and buttons
-  - positional sensors - like volume knobs
-  - proximity/distance sensors
-  - light sensors
-  - IR/RF remote controls
-
-Inputs are often, but not always, associated with a physical electronic 
-component.  LCPF also supports "virtual" inputs such as
-  - DMX (Art-Net) device emulation
-  - Web page controls [^2]
-  - Mesh connections to other LCPF projects [^3]
-
-
-### Outputs
-
-Outputs are things that can create change in the environment.   Practical examples include
-  - LEDs and other light producing devices
-  - Audio output
-  - Motion / motor control
-
-### Device configuration
-
-In order to use all the nifty hardware that provides Inputs and/or Outputs, 
-LCPF needs to know what hardware you are using.  This is usually a fairly
-complex part of an embedded project - LCPF can makes this much easier[^5].  For example, if you
-use a [Lolin S2 Mini](https://www.wemos.cc/en/latest/s2/s2_mini.html) with a 
-[Terrain-Tronics Caernarfon Castle Kit](https://www.tindie.com/products/terraintronics/caernarfon-castle-kit/), 
- IR remote,  35 NeoPixel LEDS, and two servo motors,  your entire code for device configuration could be
-as simple as 
-```python 
-    caernarfon = mainManager.TerrainTronics.addCaernarfon(neoPixelCount=35)
-    doorMotor = caernarfon.initServo( 1, "doorDrive" )
-    windowMotor = caernarfon.initServo( 2, "windowMotor" )
-    remote = caernarfon.addIrRemote()
-```
-No pins assignments, no addresses, no board types - LCPF handles all that for you.[^5]
-
-### Triggers
-
-### Scenes
 
 ### Behaviors
 
 ---
 
 [^1]: Well, hopefully, assuming I get things right...
-[^2]: Partially implemented
-[^3]: Not implemented yet, but coming soon
-[^3]: Currently supported controllers include Lolin S2 Mini, Lolin S3 Mini, and the Lilygo T-OI Plus
-[^5]: _IF_ you  stick within the "curated" set of hardware options.  However, there are already a few dozen supported devices and the list continues to grow.  

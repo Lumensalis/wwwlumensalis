@@ -1,0 +1,112 @@
+---
+title:  Printing Transparent Items
+---
+
+## Is That Clear???
+
+I've done a good bit of experimentation with printing clear bits,
+both with clear filament (FDM) and resin.  
+
+One specific rabbit hole I've delved into is using transparent 3D printed
+parts to enhance light from LEDs. Eventually I'll add a section dedicated 
+to this topic, but for now here are some examples of things I've worked on:
+  - diffusers to soften the direct output from LEDs
+  - shaped light pipes to evenly distribute light in a desired area
+    - for example, a panel in a stained glass window
+  - moving light with optical fiber
+    - adapters / lenses to efficiently collect LED output and get (most of) it into the fiber
+    - mounts / lenses / light pipes on the other end to display the light
+    - some clear FDM filaments actually work half-way decently as optical fiber
+    - getting seriously into designing custom parts to do this requires 
+      wrapping your head around 
+      [total internal reflection](https://en.wikipedia.org/wiki/Total_internal_reflection),
+      which is a _substantial_ rabbit hole all by itself
+  - various combinations of the above to when areas you want to light 
+    - are smaller than an LED
+    - contain in irregular shapes or (multiple light) patterns difficult to cleanly
+      illuminate directly 
+    - contain many lights on the surface of an object where it's easier to 
+    route optical fiber to each location from a central multi-LED strip or panel
+    than creating a wiring harness for many individual LEDs
+
+In general, printing solid transparent objects can be surprisingly challenging.  Just 
+spooling up some clear filament (or even filling your vat with clear resin)
+probably won't get you the results you were looking for.  You can improve results with a 
+bit of effort, but keep your expectations realistic.  Each step closer to 
+"looks like glass" clarity is usually more difficult than the last.
+
+  - Nice looking _mostly_
+transparent prints with a slightly translucent frosted surface are usually
+achievable with a bit of effort.
+  - Truly "crystal clear" prints are quite challenging to produce with consumer
+grade printers (if not practically impossible, for example, high quality 
+optical components).
+
+
+## General tips
+
+Google is your friend, take some time to search things like [3d printing transparent objects](https://www.google.com/search?q=3d+printing+transparent+objects)
+  - _This_ page is based on observations from my personal experience, YMMV
+
+Not all "transparent" materials (filaments/resins/...) are created equal
+  - some will make it easier to approach true transparency
+  - BUT that may mean tradeoffs (strength, heat resistance, ...) relevant to 
+     your application
+
+
+## FDM 
+
+
+Printing "clean" transparent solid objects using clear filament and FDM
+printers can take a little extra effort. 
+
+The foremost requirement - which most people figure out on there own - is
+using 0% infill.  However, that isn't always enough.  
+
+I find that - especially for thicker sections - "over filling" helps.
+Otherwise you may get visible patterns in the interior from places where 
+wasn't quite enough filament to firmly squeeze/adhere into a solid block 
+with uniform density.
+
+While there's no simple "right" (i.e. just use these exact settings) way to 
+achieve this, there are a few common tips:
+
+  - over extrude - push out a little more filament
+  - run a little hotter (and potentially with less cooling)
+
+It's best to experiment a bit until you get results you like,
+as the actual settings that work best will vary based on
+which printer and filament you're using and your other slicer settings. 
+
+If your slicer supports it, you want to create a dedicated configuration 
+just for printing solid transparent objects with clear filament
+  - most do - Cura calls them "Materials", Prusa calls them "Filamaents", ...
+  - for _each specific clear filament product_ you use
+    - obviously clear PLA and clear PETG are different
+    - but Prusament PETG cl , i.e. if you use 
+
+Relevant settings to adjust / tweak / experiment with:
+ 
+  - In Prusa Slicer,
+    - Filament settings 
+      - "Extrusion Multiplier and Nozzle Temperature in your Filament section
+      - Cooling section
+  - In Cura
+    -Cura has both custom materials and material settings per profile
+    - Custom Material settings
+      - Default Printing Temperature
+      - Fan Speed
+      - maybe Retraction Distance (shorter  retraction will probably increase exterior issues like stringing,  but might reduce gaps in the interior)
+    - Material settings (in profile)
+      - Printing temperature (may override default from selected "Material")
+      - Flow (and related like Infill Flow, Initial Layer Flow, ...)
+ 
+Note that there may be be other settings that make a difference, and some
+of these options may be hidden unless you change your configuration
+detail visibility (switch to "Expert Mode" in Prusa Slicer,
+"Expert" visibility in Cura, ...)
+
+But I recommend starting by increasing your 
+Extrusion Multiplier (Prusa) / Flow rate (Cura) before tweaking
+temperature or cooling.  For some clear filaments  (IIRC especially PLA?)
+this was all I needed to change.
