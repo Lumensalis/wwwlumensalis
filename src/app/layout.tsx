@@ -5,8 +5,12 @@ import 'katex/dist/katex.min.css'
 import { Footer, Layout, Navbar } from 'nextra-theme-docs';
 import { Banner, Head } from 'nextra/components';
 import { getPageMap } from 'nextra/page-map';
+import {  PageMapItem } from 'nextra';
 import 'nextra-theme-docs/style.css';
 
+
+//import { LCPFRepoDocs } from "./LCPFRepo/[[...slug]]/page"
+//import { gqlintRepoDocs } from "@/app/graphql-eslint/[[...slug]]/page"
 
 
 export const metadata: Metadata = {
@@ -14,9 +18,7 @@ export const metadata: Metadata = {
   // For more information on metadata API, see: https://nextjs.org/docs/app/building-your-application/optimizing/metadata
   title: "Lumensalis Web",
   description: "Lumensalis Website",
-
 }
- 
 
 const banner = <Banner storageKey="some-key">Lumensalis CircuitPython framework coming soon 🎉</Banner>
 const navbar = (
@@ -29,7 +31,17 @@ const navbar = (
   />
 )
 const footer = <Footer>©  {new Date().getFullYear()} James Fowler.</Footer>
- 
+
+
+async function getPageMapWithRemotes() : Promise<PageMapItem[]>{
+    //const pageMap = [...(await getPageMap()), graphqlEslintPageMap]
+    return [...(await getPageMap()),
+        /// LCPFRepoDocs.pageMap
+        // gqlintRepoDocs.pageMap
+         ]    
+}
+
+
 export default async function RootLayout({ children }: Readonly<{
   children: React.ReactNode;
 }> ) {
@@ -51,7 +63,7 @@ export default async function RootLayout({ children }: Readonly<{
         <Layout
           banner={banner}
           navbar={navbar}
-          pageMap={await getPageMap()}
+          pageMap={await getPageMapWithRemotes()}
           docsRepositoryBase="https://gitlab.com/lumensalis/wwwlumensalis/-/tree/master"
           //editLink={null}
           footer={footer}

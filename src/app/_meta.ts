@@ -20,6 +20,7 @@ const meta: MetaRecord = {
   Contact: {
     type: "page"
   },
+  //'graphql-eslint' : { display:'hidden'},
   About: {
     // Alternatively, you can set title with `title` property
     title: 'About Us',
