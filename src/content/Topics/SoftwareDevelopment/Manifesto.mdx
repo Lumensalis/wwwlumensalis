@@ -12,7 +12,7 @@ into my perspective on what matters in software development.
 
 ### Exceptions to every rule
 
-These can be read as applied as "rules", and doing so may produce optimal
+These can be read as "rules", and doing so may produce good
 results in most cases.  However, no rule works as intended everywhere. 
 IMHO ___there are no perfect rules|principles|methodologies|programming
 languages|etc___ for developing complex systems.  Those who insist otherwise
@@ -22,7 +22,7 @@ accordingly, and keep learning.
 
 ## Original Tidbits
 
-This section a loose collection of maxims and aphorisms I've developed over the years...
+This section is a loose collection of maxims and aphorisms I've developed over the years...
 
 ### Performance / Optimization
 
@@ -59,13 +59,13 @@ Concepts I generally endorse, although without the witty phrasing
 ### Balance and Harmony
 
 All these are beliefs _I_ hold strongly.  I don't insist that others do - I've
-often worked talented people I sincerely respect who think quite differently 
+often worked with talented people I sincerely respect who think quite differently 
 on a few of these.  There's nothing on this list I consider immutable -
 other than _perhaps_ "exceptions to every rule". Maybe.
 
 OTOH if you refuse to discuss or consider dissenting opinions you're dealing 
 with dogma, not science or engineering.  That said, questioning is good and
-should be _encouraged_(although there are some reasonable caveats).
+should be _encouraged_ (although there are some reasonable caveats).
 
 
 ### Complexity and Compromise
@@ -76,8 +76,8 @@ crashing) and typically juggle a formidable list of requirements.  Consider
 virtually impossible to pull off in practice.  The requirements for complex 
 projects will inexorably contain a few desirable deliverables which are
 mutually exclusive or simply out of reach.  They must build upon a
-collection of decisions related to tradeoffs concerning these requirements (representable by a 
-[DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph) if you're
+collection of decisions related to tradeoffs concerning these requirements (representable
+by a [DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph) if you're
 really lucky).  
 
 But invariably, whether you blame Murphy, 
@@ -89,7 +89,7 @@ of rolling dice until the heat death of the universe.
 
 For example, I never encourage violating [DRY](#DRY), but there are legitimate cases 
 where I have (and would again).  Sometimes disparate toolchains prevent simple
-sharing, and development of custom DevOps integration to stay DRY _reliably_ 
+sharing, and development of custom DevOps integration to keep things DRY _reliably_ 
 wouldn't be cost effective.  Some forms of code sharing may breach regulatory 
 or security requirements regarding isolation between development groups
 responsible for different areas.
@@ -126,7 +126,7 @@ you're on the right track towards success the inflexible can never reach.
 I'm rather [fanatical](#TriDRY) about the value of the 
 [DRY principle](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)(Don't Repeat Yourself).
 I consider anything that violates it to be _at best_ a source of technical debt.
-It almost invariably increases risks within the the system[^dryRisks].
+It almost invariably increases risks within the system[^dryRisks].
 It also often becomes a major constraint on the ability to scale the complexity 
 of larger systems.
 
@@ -148,19 +148,19 @@ synchronized is dramatically reduced.
 [^letterLonger]: Blaise Pascal  https://wist.info/pascal-blaise/10466/_
 
 All else being equal, shorter is _usually_ better.   There are exceptions, particularly with [naming](#readablecode).
-But expressing all that you need to express (whether in prose or code) in it's
+But expressing all that you need to express (whether in prose or code) in its
 most concise form takes effort, and usually some time to edit and reflect.
 
-If your reading this document (and many of the others on this site) in the early
-summer of 2025, it should be a good example.  It (or at least the existing 
-content will be refined and condensed) _will_ get smaller before long.
+If you're reading this document (and many of the others on this site) in the early
+summer of 2025, it should be a good example.  The existing content _will_
+get smaller before long  (although I'm also adding _new_ content).
 
 I've observed a similar dynamic with source code.  Some of the _best_ code 
 actually gets smaller over time, while _increasing_ in flexibility,
 reliability, and performance.  However there is an additional dynamic in play, 
 beyond the extra work required for concise prose.  With code, there's often 
 a lot you don't know ( interactions and use cases in practice, performance, 
-...) until you've gotten the first cut up and running.  Intentional observation 
+etc...) until you've gotten the first cut up and running.  Intentional observation 
 and analysis over time can reveal hidden correlations and inspire better ideas.  
 After which _judicious_ refactoring can result in quantifiable improvements in capability 
 and performance _and_ a reduction in size and complexity (especially in interfaces).
@@ -168,15 +168,15 @@ and performance _and_ a reduction in size and complexity (especially in interfac
 
 ### Documentation matters
 
-  This is important enough to have it's [own page](../Documentation/WritingDocumentation.mdx)
+  This is important enough to have its [own page](../Documentation/WritingDocumentation.mdx)
   
 ### Testing matters
 
-    Also worthy of it's [own page](../Testing.mdx)
+    Also worthy of its [own page](../Testing.mdx)
 
 ### Interface trumps Implementation
 
-Yet another worthy of it's own page, which will be coming soon.  
+Yet another worthy of its own page, which will be coming soon.  
 A few highlights:
 
 
@@ -198,7 +198,7 @@ cost( "badInterface","goodImplementation ") = 10 * cost( "goodInterface","badImp
 Amateur and junior developers (and even a few brilliant seasoned ones) may 
 see writing code as a way to show how clever they are.  Or be obsessed with 
 code formatting (making it as compact as possible or mind-numbingly dispersed), 
-or employing the latest flavor-of-the-month syntactic sugar every change 
+or employing the latest flavor-of-the-month syntactic sugar every chance 
 they get.
 
 Older, wiser, experienced types have had to _read_ far more code than they've
@@ -216,7 +216,7 @@ simple and near universally applicable tips.
     - <code lang='cpp'>void DontFearDescriptiveNames( int onTheOtherHandYouCanTakeThisToFar );</code>
   - Coding style matters
     - _which_ coding style you use - how you manage indenting code blocks, 
-      whether you use camelCase or under_scores, etc is ultimately not that 
+      whether you use camelCase or under_scores, etc. - is ultimately not that 
       significant
     - what _is_ significant is picking a style and using it consistently
 
@@ -226,7 +226,7 @@ simple and near universally applicable tips.
   - Attributed to Alan Key, see [Alan Kay’s Approach to Accessible Complexity](https://medium.com/@mdelhaous/alan-kays-approach-to-accessible-complexity-4e3b6610cf60)
   - Back when C++ was young and Rogue Wave was a major player, there was an oft 
     repeated mantra which went something like "Make simple things easy, 
-    and hard things possible".  While researching it's origin to see if that
+    and hard things possible".  While researching its origin to see if that
     might have been an original saying (we had some very bright bulbs in 
     those days) I found the Alan Keys quote, from which it was
     almost certainly paraphrased.  
@@ -235,7 +235,7 @@ simple and near universally applicable tips.
   
 I've more than once butted heads with well-meaning Agile fanboys who 
 insisted on dogmatic application of commonly Agile-associated buzzwords [^notAgile]
-like YAGNI[^YAGNI][^notAgile] and MVP[^MVP].  Somehow they simultaneously
+like YAGNI[^YAGNI] and MVP[^MVP].  Somehow they simultaneously
 _missed_ the significant role of communicating customers and understanding 
 their needs in the Agile methodology[^isAgile]
        
@@ -247,9 +247,9 @@ However, designing interfaces/APIs which _accommodate_ (but not implement)
 known, rational future requirements _can_ be **good**.  Rejecting such from
 knee-jerk adherence to YAGNI/MVP dogma is... **not**.  
 
-And citing YAGNI/MVP as a justification to avoid the up front work necessary 
+And citing YAGNI/MVP as a justification to avoid the upfront work necessary 
 to provide a DRY interface wrapper around high risk business critical features - 
-for example,  making sure all financial transactions against against the ledger
+for example,  making sure all financial transactions against the ledger
 _holding the account of record_ is centralized, secured, and thoroughly tested -
 is a waste of time because copy&paste reuse of SQL code _which modifies 
 the ledger_ "is quicker and easier" and "we should be Agile" and "we're stuck
@@ -260,7 +260,7 @@ dismounting soapbox, putting that pet peeve back on the shelf.
 This demonstrates some of the challenges of maintaining balance.  Names were
 omitted and some details changed to protect the innocent (I never _proved_
 them guilty) but needless to say these were inspired by actual experience, 
-in which I _strongly_ disagreed with other some other architects.  And yet 
+in which I _strongly_ disagreed with some other architects.  And yet 
 their motivation wasn't wrong.  YAGNI[^YAGNI] and MVP[^MVP] are both
 reasonable and valuable principles to employ in the design/development cycle. 
 
@@ -299,7 +299,7 @@ I somehow missed out on this - guess that can happen if you spend more time
 actually building stuff instead of playing buzzword bingo and figuring out 
 what new hotness you can leverage for FUD to get more consulting clients by
 convincing them they need to rebuild everything from scratch (looking at
-you, Y2K and Y2K era Java "Enterprise" apps...).   I only recently encounteed 
+you, Y2K and Y2K era Java "Enterprise" apps...).   I only recently encountered 
 it when researching the origin of [Simple things should be...](#simplethings) -
 which is a shame, because what little I've seen so far has quite a bit in common
 with some of the design decisions in my current projects like 

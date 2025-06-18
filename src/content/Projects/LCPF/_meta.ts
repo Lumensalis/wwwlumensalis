@@ -4,8 +4,7 @@ const meta : MetaRecord = {
     'index' : {    },
     'Concepts' : {},
     'Behaviors':{},
-    'History':{}
-    
+    'History':{},
 };
 
 export default meta;

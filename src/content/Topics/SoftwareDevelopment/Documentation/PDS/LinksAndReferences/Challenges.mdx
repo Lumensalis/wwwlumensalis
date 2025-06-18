@@ -1,0 +1,48 @@
+---
+title: Challenges
+---
+
+# Challenges for Links and References
+
+
+A significant body of documentation will rarely have all of the
+documentation source in a single location or format.  However,
+it is sometimes desirable to embed links to other locations in the 
+combined documentation which are defined outside a local project.  There 
+needs to be a consistent and predictable form for such external links.
+
+## Domain Hierarchy
+
+Rendering documentation 
+
+## reference content
+
+### reference format
+
+There needs to be _some_ way to embed links in documentation source.  The common
+`[text](location)` format for links might be a place to start.  However, 
+there needs to be a way to distinguish between local references 
+
+### NO LOCATION
+
+This form needs a way to encode links relative to the overall domain semantics
+__without__ actual location.  Common mechanism such as 
+  - URLs into another repo
+  - relative file system links outside the local project 
+  - any other technique that includes information about _where_ the 
+    referenced content resides
+can be expedient and workable for simple bodies of documentation.
+
+
+
+
+## Variables 
+
+ - multiple content locations
+   - directly authored files ( .mdx / .asciidoc / ... )
+   - extracted from other file formats (C++|Python with Doxygen|Sphinx, JSDoc, ...)
+   - potentially across multiple repos
+
+ - variations in link/reference syntax in documentation source flavors
+
+
