@@ -52,7 +52,7 @@ export default async function RootLayout({ children }: Readonly<{
           banner={banner}
           navbar={navbar}
           pageMap={await getPageMap()}
-          docsRepositoryBase="https://gitlab.com/lumensalis/wwwlumensalis"
+          docsRepositoryBase="https://gitlab.com/lumensalis/wwwlumensalis/-/tree/master"
           //editLink={null}
           footer={footer}
           // ... Your additional layout options
